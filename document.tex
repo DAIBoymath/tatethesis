@@ -1,0 +1,191 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[OT1]{fontenc}
+\usepackage{amsfonts, amsmath, amsthm, amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{thmtools}
+\usepackage{mathrsfs}
+\usepackage{hyperref}
+\usepackage[all]{xy}
+\usepackage{accents}
+\newlength{\dhatheight}
+\newcommand{\doublehat}[1]{%
+	\settoheight{\dhatheight}{\ensuremath{\hat{#1}}}%
+	\addtolength{\dhatheight}{-0.35ex}%
+	\hat{\vphantom{\rule{1pt}{\dhatheight}}%
+		\smash{\hat{#1}}}}
+\newcounter{countCode}
+\lstnewenvironment{code} [1][caption=Ponme caption, label=default]{%
+	\renewcommand*{\lstlistingname}{Listado} 
+	\setcounter{lstlisting}{\value{countCode}} 
+	\lstset{ %
+		language=java,
+		basicstyle=\ttfamily\footnotesize,       % the size of the fonts that are used for the code
+		numbers=left,                   % where to put the line-numbers
+		numberstyle=\sc,      % the size of the fonts that are used for the line-numbers
+		stepnumber=1,                   % the step between two line-numbers. 
+		numbersep=5pt,                 % how far the line-numbers are from the code
+		numberstyle=\color{red!50!blue},
+		backgroundcolor=\color{lightgray!20},
+		rulecolor=\color{blue},
+		keywordstyle=\color{red}\bfseries,
+		showspaces=false,               % show spaces adding particular underscores
+		showstringspaces=false,         % underline spaces within strings
+		showtabs=false,                 % show tabs within strings adding particular underscores
+		frame=single,                   % adds a frame around the code
+		framexleftmargin=0mm,
+		numberblanklines=false,
+		xleftmargin=5pt,
+		breaklines=true,
+		breakatwhitespace=true,
+		breakautoindent=true,
+		captionpos=t,
+		texcl=true,
+		tabsize=2,                      % sets default tabsize to 3 spaces
+		extendedchars=true,
+		inputencoding=utf8, 
+		escapechar=\%,
+		morekeywords={print, println, size, background, strokeWeight, fill, line, rect, ellipse, triangle, arc, save, PI, HALF_PI, QUARTER_PI, TAU, TWO_PI, width, height,},
+		emph=[1]{print,println,}, emphstyle=[1]{\color{blue}}, % Mis palabras clave.
+		emph=[2]{width,height,}, emphstyle=[2]{\bf\color{violet}}, % Mis palabras clave.
+		emph=[3]{PI, HALF_PI, QUARTER_PI, TAU, TWO_PI}, emphstyle=[3]\color{orange!50!violet}, % Mis palabras clave.
+		emph=[4]{line, rect, ellipse, triangle, arc,}, emphstyle=[4]\color{green!70!black}, % Mis palabras clave.
+		%emph=[5]{size, background, strokeWeight, fill,}, emphstyle=[5]{\tt \color{red!30!blue}}, % Mis palabras clave.
+		%emph={[2]sqrt,baset}, emphstyle={[2]\color{blue}}, % f(sqrt(2)), sqrt a nivel 2 se pondrá azul
+		#1}}{\addtocounter{countCode}{1}}
+
+\setcounter{tocdepth}{2}
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{fact}{Fact}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollary}
+\newtheorem{conj}{Conjecture}
+\newtheorem{problem}{Problem}
+\newtheorem{statement}{Statement}
+\newtheorem{claim}{Claim}
+\newtheorem{defn}[thm]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[subsection]{Remark}
+\newtheorem{remarks}[subsection]{Remarks}
+\newtheorem{example}{Example}[subsection]
+
+
+
+\title{A short summary of Tate's thesis}
+\author{Daiboy}
+\date{\today}
+\begin{document}
+	\maketitle 
+	%\tableofcontents 
+	
+	Let's start with the Riemann zeta function. This is the complex function defined in the right half-plane $\mathrm{Re}(s)>1$:
+	$$\zeta(s)=\sum_{n\ge1}\frac{1}{n^s}$$
+	
+	Riemann made the following prototype result concerning the functional equation and meromorphic continuation of the zeta functions.
+	\begin{thm}
+		$\zeta(s)$ has meromorphic continuation to the whole complex plane with the only pole is a simple pole at $s=1$. Denote by $\xi(s)=\pi^{-s/2}\Gamma(s/2)\zeta(s)$ the complete zeta function, then one has the following functional equation:
+		$$\xi(s)=\xi(1-s)$$
+	\end{thm}
+	
+	The meromorphic continuation comes from the functional equation. The idea of Riemann's proof is to write the complete Riemann zeta function as the integral, or more precisely the Mellin transform of some modified theta function, then the functional equation comes from Poisson summation.\\
+	
+	Next one defines the Dirichlet character $\chi$. This is just the character of invertible residue classes of $\mathbb{Z}$ modulo some integer. The Riemann zeta function twisted by some Dirichlet character $\chi$ is called an Dirichlet L-function:
+	$$L(\chi,s)=\sum_{n\ge1}\frac{\chi(n)}{n^s}$$
+	
+	Similarly one could ask the functional equation of this function. And the proof goes the same as before: first multiply some modified Gamma function gives the complete L-function, then also write it as the Mellin transform of some theta function except twisted by $\chi$. Then again the Poisson summation gives the functional equation.\\
+	
+	In the above zeta function and L-function, one sums over all positive integers $n$. This is equal to sum over all non-zero integral ideals of $\mathbb{Q}$. In this way one can extend the whole setting to a general number field $K$. More precisely the zeta function over $K$ is the following series, which is called Dedekind zeta function. Here $\mathfrak{a}$ runs through all nonzero integral ideals and $\mathrm{N}(\mathfrak{a})$ is the absolute norm of an ideal.
+	$$\zeta_K(s)=\sum_{\mathfrak{a}\not=0}\frac{1}{\mathrm{N}(\mathfrak{a})^s}$$
+	
+	How about the generalization of Dirichlet characters to $K$? The idea is this generalization should be broad enough to contain every character one can think of which related to $K$. The naive analogy is to consider the characters of $\left(\mathscr{O}_K/\mathfrak{a}\right)^*$. This is NOT good enough. Since we are working over general number field, the uniquely factorization property may fail. To make up this one needs to work with ideals instead of elements. So the character should be a function on the ideals. In particular, the image of $\mathscr{O}_K^*$ should be trivial. Under this condition, it may happen for many $\mathfrak{a}$, characters of $\left(\mathscr{O}_K/\mathfrak{a}\right)^*$ are all trivial. 
+	
+	How to fix this? By allowing a little room for the archimedean part. More precisely, this general character, which will be called the Hecke character, first of all should be a character on the group of fractional ideals. And when consider as a function on actual elements (i.e. regard element as principal ideal), should be the product of two parts, one is the above character of some $\left(\mathscr{O}_K/\mathfrak{a}\right)^*$, the other one is the character of $\mathbb{R}^{\times,t}$ corresponds to the infinite places of $K$.
+	
+	In the adelic language this can be defined more elegant: a Hecke character is simply a character of the idele class group. Now for such Hecke character $\chi$, one defines Hecke L-function to be the Dedekind zeta function twisted by $\chi$:
+	$$L(\chi,s)=\sum_{\mathfrak{a}\not=0}\frac{\chi(\mathfrak{a})}{\mathrm{N}(\mathfrak{a})^s}$$
+	
+	So the same question presents itself: what's the functional equation? One could work in the same line as before. You write the complete L-fucntion as the Mellin transform of some theta function then apply Poisson summation. This is the work of Hecke. But as you can imagine, one would need much more techniques to write down this proof, since one has to generalize everything before to a number field. For example, the most complicated one in the proof, the theta function of a general number field.\\
+	
+	On the other hand, Tate's thesis gives an alternative and more elegant approach to this result. Here is the outline of Tate's proof:
+	\begin{itemize}
+		\item The local theory: define local zeta functions, then the local L-function would be the ``smallest'' local zeta function. Then the local functional equation comes from the local Fourier transformation and the local multiplicity one.
+		\item The Global theory: define global zeta functions, the the global functional equation comes from the usual Poisson summation.
+		\item Finally combine above two functional equations gives the functional equation of Hecke L-functions.
+	\end{itemize}
+	
+	Let's start with the local theory. Recall that we multiply the Gamma function, a misteryous factor, to the original L-functions. The reason we multiply this factor is that when you look at the original Riemann zeta function, one has the following Euler product form:
+	$$\zeta(s)=\prod_{p}\frac{1}{1-p^{-s}}$$
+	
+	Here $p$ runs through all prime numbers, in other words all the finite places of $\mathbb{Q}$. So you are still missing the factor at the only infinite place of $\mathbb{Q}$, and this would be the modified Gamma function we multiply. This also justify the name ``complete'' zeta function since, it indeed contains all local factors at any place of the number field.
+	
+	So this Gamma function can give us the idea what the integral form of a local factor of L-function should be like. Let's take a closer look at the definition:
+	$$\Gamma(s)=\int_0^{\infty}\exp(-t)t^{-s}\frac{\mathrm{d}t}{t}$$
+	
+	This integral contains three parts, $\exp(-t)$ is a function, $t^{-s}$ is a character for $(\mathbb{R}^+,\times)$ and $\frac{\mathrm{d}t}{t}$ is the Haar measure on $(\mathbb{R}^+,\times)$. This inspires us a local zeta function over any local field $K$ should be like:
+	$$\zeta(\chi,f,s)=\int_{K^{\times}}f(x)\chi(x)|x|^s\mathrm{d}^{\times}x$$
+	
+	For example if one takes $f$ to be the characteristic function on the valuation ring $\mathscr{O}_K$ and take $\chi$ to be trivial, then this local zeta function recovery the following local factor, where $\pi$ is any uniformizer, $q$ is the order of residue field. We call this local L-function and denote by $L(\chi,s)$.
+	$$L(\chi,s)=\left(1-\chi(\pi)q^{-s}\right)^{-1}$$
+	
+	We let $\chi$ to be the quasicharacter, this means the target of the map is $\mathbb{C}^{\times}$ instead of $\mathbb{S}^1$. Reason to do so is later we will decompose $S(K)$ by the action of $K^{\times}$ through all the quasicharacters.
+	
+	The correct condition on the function $f$ over $K$ is that it should be in the space of Schwartz functions $S(F)$: for archimedean $K$ this should be the smooth function of rapid decay. Here rapid decay means any higher derivatives of $f$ goes to zero when $x\to\pm\infty$ faster than functions $x^{-n}$ for any positive integer $n$. The idea behind these conditions is that eventually we will apply Fourier transform on the functions, and Fourier transform roughly swaps smoothness and rapid decay. So one needs to define Schwartz function as such to balance both conditions. For the non-archimedean $K$, as this is totally disconnected, the correct analogy of smoothness can only be locally constant. And the rapidly decay would be the functions with compact support.
+	
+	For a locally compact group, the Haar measure is unique up to a multiplication. We need to decide which Haar measure we choose on $K^{\times}$. As we explained before, the Fourier transform is an operator on $S(K)$. We denote by $\widehat{f}$ the Fourier transform of $f$. Then the fundamental theorem tells us $\doublehat{f}(x)$ and $f(-x)$ always differ by some fixed multiplication $\lambda$, we choose the Haar measure exactly to make sure $\lambda=1$.\\
+	
+	Now let's state the main theorem of the local zeta function.
+	\begin{thm}
+		For non-archimedean field $K$ and a quasicharacter $\chi$, recall $L(\chi,s)$ is the local L-function.
+		\begin{enumerate}
+			\item[(a)] For any $f\in S(K)$ we have:
+			$$\frac{\zeta(\chi,f,s)}{L(\chi,s)}\in\mathbb{C}[q^s,q^{-s}]$$
+			\item[(b)] $\zeta(\chi,f,s)$ has meromorphic continuation to the whole $\mathbb{C}$.
+			\item[(c)] One has the local functional equation, here $\varepsilon(\chi,s)$ is called the local epsilon factor.
+			$$\varepsilon(\chi,s)\frac{\zeta(\chi,f,s)}{L(\chi,s)}=\frac{\zeta(\chi^{-1},\widehat{f},1-s)}{L(\chi^{-1},1-s)}$$
+		\end{enumerate}
+	\end{thm}
+	
+	Part (a) comes from that Schwartz functions can be approached by characteristic functions of coast of ideals in $\mathscr{O}_K$. Then part (b) follows directly. Now as for part (c), Tate's original proof is to first show that it suffices to prove the functional equation simply for one choice $f$, then he proved this for well-chosen $f$. In modern treatment, this is done by multiplicity one property, a strategy that can also be used in higher dimensional Langlands.
+	
+	One has a natural $K^{\times}$ action on $S(K)$ simply by right translation. Then this induces the action on dual $S(K)^{\vee}$. Hence this has decomposition by quasicharacters of $K^{\times}$:
+	$$S(K)^{\vee}=\bigoplus_{\chi}S(\chi)$$
+    	
+	Multiplicity one property refers to each $S(\chi)$ is of dimensional one. It can be shown that both $\frac{\zeta(\chi,-,s)}{L(\chi,s)}$ and $\frac{\zeta(\chi^{-1},\widehat{-},1-s)}{L(\chi^{-1},1-s)}$ lies in $S(\chi)$, hence they differ by some multiplication $\varepsilon(\chi,s)$ not related $f$. This completes the proof of the theorem.\\
+	 
+	Now we move on to the global theory. Denote by $K$ a number field. Here we work with the language of adele and idele. Compare with the language of ideals, although the two theories are equal, the adele one is much more elegant. For example the combination of the two main theorems in classical algebraic number theory, Dirichlet's unit theorem and finiteness of class group, is equal to the compactness of the norm 1 idele class group $\mathbb{I}_K^{|\cdot|=1}/K^{\times}$.
+	
+	One defines global zeta function below similarly. Here $f$ is the Schwartz function on $\mathbb{A}_K$, which is the restrict product of the local Schwartz functions. This time we take $\chi$ to be a character on the idele class group $\mathbb{I}_K/K^{\times}$, since we won't be needing the decomposition by quasicharacters, then $\chi$ is the product of local quasicharacters. And take the Haar measure to be the product of the local Haar measure we chose before. And this global zeta function is exactly the product of all the local zeta functions we defined before.
+	$$\zeta(\chi,f,s)=\int_{\mathbb{I}_K}f(x)\chi(x)|x|^s\mathrm{d}^{\times}x$$
+	
+	Next we state the main theorem of global zeta functions:
+	\begin{thm}
+		Assume $\chi$ is a character on $\mathbb{I}_K^{|\cdot|=1}/K^*$ (since the Hecke character is defined on ideals).
+		\begin{enumerate}
+			\item[(a)] (Functional equation): $\zeta(\chi,f,s)=\zeta(\chi^{-1},\widehat{f},1-s)$
+			\item[(b)] (Meromorphic continuation): $\zeta(\chi,f,s)$ has meromorphic continuation to the whole complex plane.
+		\end{enumerate}
+	\end{thm}
+	
+	As before part (b) comes from part (a). Now to prove meromorphic continuation, just like in Riemann's proof, one needs the Poisson summation. This roughly means that when define some Schwartz function $f$ on a space $X$, take some lattice $\Gamma\subseteq X$ such that the quotient is compact, then the summation of $f$ and Fourier transform $\widehat{f}$ over the lattice coincide. In Riemann's case the space is $X=\mathbb{R}$ and the lattice is $\mathbb{Z}$. Now to apply to our case, one notices that $K$ is a lattice in $\mathbb{A}_K$ and the quotient is compact. This is another advantage of the Adelic language.\\
+	
+	Finally, one obtains the functional equation for Hecke L-functions simply by combining the functional equations in local and global theories:
+	\begin{align*}
+		L(\chi,s)&=\prod_vL_v(\chi,s)\\&=\prod_v\frac{\varepsilon_v(\chi,s)L_v(\chi^{-1},1-s)\zeta_v(\chi,f,s)}{\zeta_v(\chi^{-1},\widehat{f},1-s)}\\&=\left(\prod_v\varepsilon_v(\chi,s)\right)L(\chi^{-1},1-s)\frac{\zeta(\chi,f,s)}{\zeta(\chi^{-1},\widehat{f},1-s)}\\&=\varepsilon(\chi,s)L(\chi^{-1},1-s)
+	\end{align*}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+\end{document}
